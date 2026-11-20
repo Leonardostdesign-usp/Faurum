@@ -1,0 +1,32 @@
+{
+  "name": "faurum",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev dist --compatibility-date=2024-01-01",
+    "dev:vite": "vite",
+    "build": "vite build",
+    "deploy": "vite build && wrangler pages deploy dist --project-name faurum",
+    "preview": "vite preview",
+    "test": "node --env-file=.env scripts/test-suite.js",
+    "db:schema": "node --env-file=.env scripts/apply-schema.js",
+    "db:schema:prod": "node --env-file=.env scripts/apply-schema.js --prod",
+    "export": "node --env-file=.env scripts/export.js",
+    "export:prod": "node --env-file=.env scripts/export.js --prod",
+    "db:destroy": "node --env-file=.env scripts/db-destroy.js",
+    "db:destroy:prod": "node --env-file=.env scripts/db-destroy.js --prod"
+  },
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^4.6.0",
+    "@libsql/client": "^0.14.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11",
+    "wrangler": "^3.91.0"
+  }
+}
