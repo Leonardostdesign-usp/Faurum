@@ -1,3 +1,20 @@
+# Próximo deploy (após editar código)
+npm run deploy
+
+# Testar localmente com banco de dev
+npm run dev  # → http://localhost:8788
+
+# Ajustar datas: editar shared/config.js e fazer npm run deploy
+
+# Exportar dados ao final da semana
+node --env-file=.env scripts/export.js --prod
+
+# Moderar (ocultar resposta ofensiva)
+node --env-file=.env scripts/moderate.js --prod hide <id_da_resposta>
+
+
+
+
 # Faurum
 
 Fórum de perguntas rotativas desenvolvido para a disciplina **AUH2820 — Cultura Urbana na Contemporaneidade** (Profª Dra. Giselle Beiguelman, FAUUSP). Alunos de Arquitetura (período integral) e Design (período noturno) respondem a perguntas curtas durante a semana da intervenção, via QR Code exibido na TV do museu da FAU.
@@ -74,13 +91,20 @@ node --env-file=.env scripts/apply-schema.js
 ## Desenvolvimento
 
 ```bash
-# Rodar o frontend apenas (sem Functions, sem banco)
-npm run dev:vite
-
-# Rodar o ambiente completo com Cloudflare Functions + banco de dev
 npm run dev
-# → http://localhost:8788
 ```
+
+Um único comando sobe dois processos em paralelo:
+- **Vite** (`web`) em `http://localhost:5173` — front-end com HMR (atualização instantânea ao editar `src/`).
+- **Wrangler Pages Functions** (`api`) em `http://localhost:8788` — API + banco de dev, lendo `.dev.vars`.
+
+Abra **`http://localhost:5173`** no navegador (não o 8788). O Vite faz proxy de `/api/*` para o Wrangler, então o front e a API funcionam juntos no mesmo endereço.
+
+> Notas:
+> - Se a pasta `dist/` não existir, o script `dev` cria ela automaticamente (sem sobrescrever um build existente).
+> - Mudanças em `functions/` e `shared/` são recarregadas pelo Wrangler; se algo não refletir, reinicie o `npm run dev`.
+> - Scripts separados: `npm run dev:vite` (só Vite) e `npm run dev:api` (só Wrangler/Functions). O fallback antigo está em `npm run dev:build`.
+> - Em desenvolvimento local, o cookie de sessão não usa a flag `Secure` (para funcionar em `http://localhost`); em produção, `Secure` só é aplicado quando `ENVIRONMENT=production`.
 
 ---
 
@@ -135,22 +159,25 @@ As fases são:
 | `topic2` | Apenas Tópico 2 visível (Tópico 1 oculto) |
 | `closed` | Ambos os tópicos visíveis em modo leitura (abas) |
 
-> Em **desenvolvimento** (qualquer ambiente não-produção), é possível forçar uma fase específica no `.dev.vars` (reinicie o `wrangler pages dev` após alterar):
-> - **Mais simples (recomendado):** `FORCE_PHASE=topic1` (valores: `before`, `topic1`, `topic2`, `closed`). Para voltar à tela "A plataforma ainda não está aberta", use `FORCE_PHASE=before` ou remova/comente a variável.
-> - **Alternativa por data/hora:** `NOW_OVERRIDE=2026-12-01T14:00:00-03:00` força o relógio de referência (útil para testar transições exatas).
+> Para testes, é possível forçar uma fase específica sem remover a tela "A plataforma ainda não está aberta" do código:
+> - **Mais simples (recomendado):** `FORCE_PHASE=topic1` (valores: `before`, `topic1`, `topic2`, `closed`).
+> - **Alternativa por data/hora:** `NOW_OVERRIDE=2026-12-01T14:00:00-03:00` força o relógio de referência.
+> - **Local (`.dev.vars`):** funciona em ambiente não-produção; reinicie o `wrangler pages dev` após alterar.
+> - **Produção (`*.pages.dev`) de forma controlada:** defina `ALLOW_PHASE_OVERRIDE=true` **e** `FORCE_PHASE=...` nas variáveis de ambiente de **Production** no Cloudflare Pages. Enquanto estiverem definidos, a fase será forçada para todos que acessarem. **Para voltar ao normal:** remova `ALLOW_PHASE_OVERRIDE`, `FORCE_PHASE` e `NOW_OVERRIDE` — o calendário real volta a valer e a tela `before` reaparece quando a fase for `before`.
 > 
-> Em produção esses overrides são ignorados e o calendário real volta a valer. Para testar localmente com a API/Functions, use `npm run build && npm run dev` e abra `http://localhost:8788` (não a URL `*.pages.dev`). Se quiser confirmar a fase aplicada, consulte `GET /api/state`.
+> Para testar localmente com a API/Functions, use `npm run build && npm run dev` e abra `http://localhost:8788`. Para confirmar a fase aplicada em qualquer ambiente, consulte `GET /api/state`.
 
 ---
 
 ## Variáveis de Ambiente em Produção
 
-As variáveis de produção já estão configuradas nos segredos da Cloudflare Pages:
+As variáveis de produção devem estar configuradas no Cloudflare Pages (Production):
 
 | Variável | Fonte |
 |---|---|
 | `TURSO_DATABASE_URL` | Cloudflare Pages Secrets |
 | `TURSO_AUTH_TOKEN` | Cloudflare Pages Secrets |
+| `ENVIRONMENT` | `production` (ativa cookie `Secure` e guards de produção) |
 
 Para atualizar os segredos:
 ```bash
@@ -256,7 +283,7 @@ Faurum/
 │   └── test-suite.js         # Suíte de testes automatizados
 ├── shared/
 │   ├── auth.js               # Sessão, hashing, validação de nick/curso
-│   ├── config.js             # Fases, tópicos, NOW_OVERRIDE/FORCE_PHASE
+│   ├── config.js             # Fases, tópicos, NOW_OVERRIDE/FORCE_PHASE/ALLOW_PHASE_OVERRIDE
 │   ├── db.js                 # Cliente Turso para Cloudflare Functions
 │   ├── relative-time.js      # Tempo relativo em PT-BR
 │   ├── replies-helper.js     # SQL e formatação de respostas

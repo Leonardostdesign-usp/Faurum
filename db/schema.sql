@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   course TEXT NOT NULL CHECK (course IN ('arquitetura', 'design', 'outro')),
   session_token_hash TEXT NOT NULL,
   fingerprint TEXT NOT NULL,
-  ip TEXT NOT NULL,
+  ip TEXT,
   user_agent TEXT NOT NULL,
   privacy_accepted_at TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%S+00:00', 'now'))

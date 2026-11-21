@@ -33,11 +33,14 @@ export function generateSessionToken() {
 
 /**
  * Monta o cabeçalho Set-Cookie para a sessão.
+ * Em desenvolvimento local, omite Secure para compatibilidade com http://localhost.
  * @param {string} token
+ * @param {Record<string, any>} [env]
  * @returns {string}
  */
-export function createSessionCookie(token) {
-  return `${COOKIE_NAME}=${token}; Path=/; Max-Age=${SESSION_MAX_AGE_SECONDS}; HttpOnly; Secure; SameSite=Lax`;
+export function createSessionCookie(token, env = {}) {
+  const secure = env.ENVIRONMENT === "production" ? "; Secure" : "";
+  return `${COOKIE_NAME}=${token}; Path=/; Max-Age=${SESSION_MAX_AGE_SECONDS}; HttpOnly${secure}; SameSite=Lax`;
 }
 
 /**
@@ -60,14 +63,15 @@ export function getSessionTokenFromRequest(request) {
 
 /**
  * Obtém o IP do cliente a partir dos cabeçalhos da Cloudflare.
+ * Em ambiente local o header pode não existir; nesse caso retorna null.
  * @param {Request} request
- * @returns {string}
+ * @returns {string | null}
  */
 export function getClientIp(request) {
   return (
     request.headers.get("CF-Connecting-IP") ||
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    "127.0.0.1"
+    null
   );
 }
 

@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler pages dev dist --compatibility-date=2024-01-01",
+    "dev": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && concurrently -n api,web -c blue,green \"npm:dev:api\" \"npm:dev:vite\"",
+    "dev:api": "wrangler pages dev dist --compatibility-date=2024-01-01",
     "dev:vite": "vite",
+    "dev:build": "wrangler pages dev dist --compatibility-date=2024-01-01",
     "build": "vite build",
-    "deploy": "vite build && wrangler pages deploy dist --project-name faurum",
+    "deploy": "vite build && wrangler pages deploy dist --project-name faurum --branch main",
     "preview": "vite preview",
     "test": "node --env-file=.env scripts/test-suite.js",
     "db:schema": "node --env-file=.env scripts/apply-schema.js",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^10.0.7",
     "vite": "^5.4.11",
     "wrangler": "^3.91.0"
   }

@@ -1,12 +1,15 @@
 @import "./tokens.css";
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100%;
   background-color: var(--color-bg);
@@ -33,7 +36,8 @@ button {
   outline: none;
 }
 
-input, textarea {
+input,
+textarea {
   font-family: inherit;
   outline: none;
 }
@@ -43,11 +47,38 @@ input, textarea {
    H1: 42px/800  H2: 34px/700  H3: 26px/700
    Text1: 21px/500  Text2: 16px/500
    ============================================================ */
-h1, .h1 { font-size: 42px; font-weight: 800; line-height: 1.2; }
-h2, .h2 { font-size: 34px; font-weight: 700; line-height: 1.2; }
-h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
-.text1   { font-size: 21px; font-weight: 500; line-height: 1.5; }
-.text2   { font-size: 16px; font-weight: 500; line-height: 1.5; }
+h1,
+.h1 {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+h2,
+.h2 {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h3,
+.h3 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text1 {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.text2 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
 
 /* Coluna Mobile Centralizada (Figma layout ~621px) */
 .app-viewport {
@@ -679,7 +710,8 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
   -webkit-backdrop-filter: blur(3px);
   z-index: 100;
   display: flex;
-  align-items: flex-end;  /* mobile: sobe do rodapé */
+  align-items: flex-end;
+  /* mobile: sobe do rodapé */
   justify-content: center;
   padding: 0;
 }
@@ -726,7 +758,9 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
 }
 
 @media (min-width: 480px) {
-  .modal-dialog::before { display: none; }
+  .modal-dialog::before {
+    display: none;
+  }
 }
 
 .modal-header {
@@ -740,8 +774,9 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: var(--color-gray-50);
+  background-color: var(--color-brand-50);
   border: var(--border-thin);
+  border-color: var(--color-brand-100);
   border-radius: 8px;
   padding: 5px 12px;
   font-size: 12px;
@@ -749,7 +784,7 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
   letter-spacing: 0.04em;
   text-transform: uppercase;
   width: fit-content;
-  color: var(--color-black);
+  color: var(--color-brand);
 }
 
 .modal-title {
@@ -935,7 +970,7 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
   color: var(--color-white);
   padding: 13px 24px;
   border-radius: var(--radius-tag);
-  border: 1.5px solid rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
   box-shadow: var(--shadow-main);
   font-size: 14px;
   font-weight: 600;
@@ -952,6 +987,7 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
     opacity: 0;
     transform: translate(-50%, 12px);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, 0);
@@ -1009,7 +1045,9 @@ h3, .h3 { font-size: 26px; font-weight: 700; line-height: 1.2; }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .empty-state-box {

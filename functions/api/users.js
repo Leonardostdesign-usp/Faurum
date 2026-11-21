@@ -75,7 +75,7 @@ export async function onRequestPost(context) {
   });
 
   const userId = Number(insertResult.lastInsertRowid);
-  const cookieHeader = createSessionCookie(token);
+  const cookieHeader = createSessionCookie(token, env);
 
   return jsonResponse(
     {

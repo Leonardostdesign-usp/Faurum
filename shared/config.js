@@ -19,7 +19,7 @@ export const TOPICS = {
 };
 
 export const DEFAULT_DATES = {
-  TOPIC1_START: "2026-11-30T06:00:00-03:00",
+  TOPIC1_START: "2020-11-30T06:00:00-03:00",
   TOPIC1_END: "2026-12-01T13:00:00-03:00",
   TOPIC2_START: "2026-12-01T13:00:00-03:00",
   TOPIC2_END: "2026-12-02T23:59:59-03:00",
@@ -27,13 +27,16 @@ export const DEFAULT_DATES = {
 };
 
 /**
- * Obtém a data de referência atual, respeitando NOW_OVERRIDE fora de produção.
+ * Obtém a data de referência atual, respeitando NOW_OVERRIDE.
+ * Por segurança, só é aplicado fora de produção, ou em produção quando
+ * ALLOW_PHASE_OVERRIDE="true" estiver explicitamente definido.
  * @param {Record<string, any>} [env]
  * @returns {Date}
  */
 export function getCurrentDate(env = {}) {
   const isProduction = env.ENVIRONMENT === "production";
-  if (!isProduction && env.NOW_OVERRIDE) {
+  const allowOverride = !isProduction || env.ALLOW_PHASE_OVERRIDE === "true";
+  if (allowOverride && env.NOW_OVERRIDE) {
     const overrideDate = new Date(env.NOW_OVERRIDE);
     if (!isNaN(overrideDate.getTime())) {
       return overrideDate;
@@ -45,8 +48,10 @@ export function getCurrentDate(env = {}) {
 /**
  * Calcula a fase atual e detalhes do tópico ativo com base nas variáveis de ambiente.
  *
- * Em ambientes fora de produção, FORCE_PHASE ('before' | 'topic1' | 'topic2' | 'closed')
- * pode ser usada para forçar a fase durante testes, sem depender do relógio.
+ * FORCE_PHASE ('before' | 'topic1' | 'topic2' | 'closed') pode ser usada para
+ * forçar a fase durante testes, sem depender do relógio. Por segurança, só é
+ * aplicada fora de produção, ou em produção quando ALLOW_PHASE_OVERRIDE="true"
+ * estiver explicitamente definido.
  *
  * @param {Record<string, any>} [env]
  * @param {Date} [currentDate]
@@ -68,7 +73,8 @@ export function getPhaseState(env = {}, currentDate = null) {
   const closedStart = new Date(env.CLOSED_START || DEFAULT_DATES.CLOSED_START);
 
   const isProduction = env.ENVIRONMENT === "production";
-  const forcedPhase = !isProduction ? env.FORCE_PHASE : null;
+  const allowOverride = !isProduction || env.ALLOW_PHASE_OVERRIDE === "true";
+  const forcedPhase = allowOverride ? env.FORCE_PHASE : null;
   const validPhases = ["before", "topic1", "topic2", "closed"];
 
   let phase = "before";
