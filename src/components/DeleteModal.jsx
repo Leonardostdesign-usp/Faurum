@@ -1,3 +1,4 @@
+import { TYPO } from "../styles/typography";
 import React, { useState } from "react";
 
 export function DeleteModal({ reply, onClose, onConfirm }) {
@@ -34,8 +35,7 @@ export function DeleteModal({ reply, onClose, onConfirm }) {
               color: "var(--color-red)",
               padding: "10px 14px",
               borderRadius: "10px",
-              fontSize: "14px",
-              fontWeight: "600",
+              ...TYPO.subtext,
             }}
           >
             {error}

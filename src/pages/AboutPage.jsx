@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { TYPO } from "../styles/typography";
 
 export function AboutPage() {
   return (
@@ -17,10 +18,10 @@ export function AboutPage() {
           gap: "12px",
         }}
       >
-        <span style={{ fontSize: "14px", fontWeight: "800", color: "var(--color-interactive)", letterSpacing: "1px" }}>
+        <span style={{ ...TYPO.subtext, color: "var(--color-interactive)", letterSpacing: "1px" }}>
           SOBRE O PROJETO
         </span>
-        <h1 style={{ fontSize: "28px", fontWeight: "800", color: "var(--color-black)", lineHeight: "1.2" }}>
+        <h1 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
           Uma breve explicação sobre a natureza e funcionamento do projeto e plataforma.
         </h1>
       </div>
@@ -38,10 +39,10 @@ export function AboutPage() {
           gap: "16px",
         }}
       >
-        <h2 style={{ fontSize: "24px", fontWeight: "800", color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
           De alunos pra alunos
         </h2>
-        <p style={{ fontSize: "16px", lineHeight: "1.6", color: "var(--color-black)" }}>
+        <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
           O ambiente da faculdade é diferente no período da manhã, tarde e noite, com pouca interação e pouco conhecimento da realidade do outro. Nesse contexto, o Faurum nasce como forma de conectar estas pessoas por meio de um fórum feito por alunos para alunos da FAU. Projeto desenvolvido na disciplina Cultura Urbana na Contemporaneidade, AUH2820, ministrada em 2026 pela Pofa. Dra. Giselle Beiguelman.
         </p>
       </div>
@@ -59,7 +60,7 @@ export function AboutPage() {
           gap: "24px",
         }}
       >
-        <h2 style={{ fontSize: "24px", fontWeight: "800", color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
           Como funciona
         </h2>
 
@@ -77,18 +78,17 @@ export function AboutPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "15px",
-              fontWeight: "800",
+              ...TYPO.text2,
               flexShrink: 0,
             }}
           >
             01
           </div>
           <div>
-            <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
               Pergunta diária
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Tópico norteador que convida à interação aparece.
             </p>
           </div>
@@ -108,18 +108,17 @@ export function AboutPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "15px",
-              fontWeight: "800",
+              ...TYPO.text2,
               flexShrink: 0,
             }}
           >
             02
           </div>
           <div>
-            <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
               Interação dos alunos
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Os alunos podem interagir com o tópico norteador ou, então, responder aos comentários feitos por outros alunos que já interagiram antes.
             </p>
           </div>
@@ -139,18 +138,17 @@ export function AboutPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "15px",
-              fontWeight: "800",
+              ...TYPO.text2,
               flexShrink: 0,
             }}
           >
             03
           </div>
           <div>
-            <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
               Repetição
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Após um certo período um novo tópico substitui o anterior.
             </p>
           </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
 import { useFingerprint } from "../hooks/useFingerprint";
 import { PrivacyOverlay } from "./PrivacyOverlay";
+import { TYPO } from "../styles/typography";
 
 export function OnboardingModal() {
   const { isOnboardingOpen, setIsOnboardingOpen, handleOnboardingSuccess } = useApp();
@@ -85,8 +86,7 @@ export function OnboardingModal() {
                 color: "var(--color-red)",
                 padding: "10px 14px",
                 borderRadius: "10px",
-                fontSize: "14px",
-                fontWeight: "600",
+                ...TYPO.subtext,
               }}
             >
               {error}
@@ -165,7 +165,7 @@ export function OnboardingModal() {
                   <span>Estou ciente que, ao prosseguir, concordo com a coleta de dados previsto no </span>
                   <button
                     type="button"
-                    style={{ color: "var(--color-interactive)", textDecoration: "underline", fontWeight: "600" }}
+                    style={{ color: "var(--color-interactive)", textDecoration: "underline", ...TYPO.subtext }}
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsPrivacyOverlayOpen(true);

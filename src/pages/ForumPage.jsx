@@ -6,6 +6,7 @@ import { ReplyCard } from "../components/ReplyCard";
 import { EditModal } from "../components/EditModal";
 import { DeleteModal } from "../components/DeleteModal";
 import { PrivacyOverlay } from "../components/PrivacyOverlay";
+import { TYPO } from "../styles/typography";
 
 export function ForumPage() {
   const { appState, user, refreshState, showSnackbar, requireUser } = useApp();
@@ -194,7 +195,7 @@ export function ForumPage() {
               <span>Aguardando Abertura</span>
             </span>
             <h1 className="question-title">A plataforma ainda não está aberta.</h1>
-            <p style={{ color: "rgba(255, 255, 255, 0.9)", fontSize: "18px" }}>
+            <p style={{ color: "rgba(255, 255, 255, 0.9)", ...TYPO.text2 }}>
               O Faurum iniciará suas perguntas em breve no piso do museu da FAUUSP.
             </p>
             {countdownText && (
@@ -204,8 +205,7 @@ export function ForumPage() {
                   padding: "10px 20px",
                   borderRadius: "100px",
                   color: "#fff",
-                  fontWeight: "700",
-                  fontSize: "16px",
+                  ...TYPO.text2,
                   marginTop: "8px",
                 }}
               >
@@ -238,11 +238,11 @@ export function ForumPage() {
             gap: "16px",
           }}
         >
-          <div style={{ fontSize: "36px" }}>🏁</div>
-          <h1 style={{ fontSize: "28px", fontWeight: "800", color: "var(--color-black)", lineHeight: "1.2" }}>
+          <div style={{ ...TYPO.h2 }}>🏁</div>
+          <h1 style={{ ...TYPO.h3, color: "var(--color-black)",  }}>
             Período de respostas encerrado
           </h1>
-          <p style={{ fontSize: "17px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+          <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
             Porém, você ainda pode ver as respostas do pessoal logo abaixo!
           </p>
         </div>

@@ -5,6 +5,7 @@ import { ReplyCard } from "../components/ReplyCard";
 import { EditModal } from "../components/EditModal";
 import { DeleteModal } from "../components/DeleteModal";
 import { PrivacyOverlay } from "../components/PrivacyOverlay";
+import { TYPO } from "../styles/typography";
 
 export function ThreadPage() {
   const { id } = useParams();
@@ -204,8 +205,7 @@ export function ThreadPage() {
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            fontSize: "16px",
-            fontWeight: "700",
+            ...TYPO.text2,
             color: "var(--color-black)",
             padding: "8px 0",
           }}
@@ -231,8 +231,7 @@ export function ThreadPage() {
           display: "inline-flex",
           alignItems: "center",
           gap: "8px",
-          fontSize: "16px",
-          fontWeight: "700",
+          ...TYPO.text2,
           color: "var(--color-black)",
           width: "fit-content",
         }}
@@ -243,7 +242,7 @@ export function ThreadPage() {
       {/* Cadeia de Ancestrais (Se for resposta a outro comentário) */}
       {data.ancestors && data.ancestors.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "-10px" }}>
-          <span style={{ fontSize: "13px", fontWeight: "700", color: "var(--color-gray-500)", textTransform: "uppercase" }}>
+          <span style={{ ...TYPO.subtext, color: "var(--color-gray-500)", textTransform: "uppercase" }}>
             Discussão anterior
           </span>
           <div style={{ borderLeft: "3px solid var(--color-gray-100)", paddingLeft: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>

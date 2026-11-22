@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { TYPO } from "../styles/typography";
 
 export function PrivacyPage() {
   return (
@@ -17,10 +18,10 @@ export function PrivacyPage() {
           gap: "12px",
         }}
       >
-        <span style={{ fontSize: "14px", fontWeight: "800", color: "var(--color-interactive)", letterSpacing: "1px" }}>
+        <span style={{ ...TYPO.subtext, color: "var(--color-interactive)", letterSpacing: "1px" }}>
           PRIVACIDADE & DADOS
         </span>
-        <h1 style={{ fontSize: "26px", fontWeight: "800", color: "var(--color-black)", lineHeight: "1.2" }}>
+        <h1 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
           Transparência total e temporariedade garantida na intervenção do campus. Como cuidamos do espaço coletivo da FAU e EBA.
         </h1>
       </div>
@@ -39,44 +40,44 @@ export function PrivacyPage() {
         }}
       >
         <div>
-          <h2 style={{ fontSize: "22px", fontWeight: "800", color: "var(--color-black)", marginBottom: "8px" }}>
+          <h2 style={{ ...TYPO.text1, color: "var(--color-black)", marginBottom: "8px" }}>
             Sobre os dados produzidos pelos participantes
           </h2>
-          <p style={{ fontSize: "16px", lineHeight: "1.5", color: "var(--color-black)" }}>
+          <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
             Apesar de a plataforma não exigir login nem cadastro formal, a participação não é totalmente anônima. Cada pessoa terá uma espécie de “conta guest”, formada pela associação entre o nick escolhido e três elementos de identificação:
           </p>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ fontSize: "17px", fontWeight: "700", color: "var(--color-black)", marginBottom: "6px" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
               Fingerprint do Navegador
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Combate a bots repetitivos e automações maliciosas sem recolher documentos pessoais.
             </p>
           </div>
 
           <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ fontSize: "17px", fontWeight: "700", color: "var(--color-black)", marginBottom: "6px" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
               Cookies Essenciais de Sessão
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Mantém seu nick e votos na jornada ativa pelo navegador sem necessitar de senha.
             </p>
           </div>
 
           <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ fontSize: "17px", fontWeight: "700", color: "var(--color-black)", marginBottom: "6px" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
               Endereço IP de Rede
             </h3>
-            <p style={{ fontSize: "15px", color: "var(--color-gray-500)", lineHeight: "1.5" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
               Contenção de abuso no pátio acadêmico e integridade do espaço universitário compartilhado.
             </p>
           </div>
         </div>
 
-        <p style={{ fontSize: "15px", lineHeight: "1.5", color: "var(--color-gray-500)" }}>
+        <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
           Isso mantém a capacidade técnica de coibir assédio, vandalismo digital e discurso de ódio, garantindo um ambiente democrático, acolhedor e respeitoso para todos no campus.
         </p>
       </div>
@@ -94,10 +95,10 @@ export function PrivacyPage() {
           gap: "10px",
         }}
       >
-        <h2 style={{ fontSize: "20px", fontWeight: "800", color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.text1, color: "var(--color-black)" }}>
           E após o fim do projeto?
         </h2>
-        <p style={{ fontSize: "16px", lineHeight: "1.5", color: "var(--color-black)" }}>
+        <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
           No fim do tempo de exibição do projeto, o banco de dados será completamente deletado e todas as informações serão destruídas.
         </p>
       </div>
@@ -115,14 +116,14 @@ export function PrivacyPage() {
           gap: "10px",
         }}
       >
-        <h2 style={{ fontSize: "20px", fontWeight: "800", color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.text1, color: "var(--color-black)" }}>
           Contato
         </h2>
-        <p style={{ fontSize: "16px", lineHeight: "1.5", color: "var(--color-black)" }}>
+        <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
           Qualquer dúvida, mande mensagem para o email:{" "}
           <a
             href="mailto:leonardostdesign@usp.br"
-            style={{ color: "var(--color-interactive)", textDecoration: "underline", fontWeight: "600" }}
+            style={{ color: "var(--color-interactive)", textDecoration: "underline",  }}
           >
             leonardostdesign@usp.br
           </a>

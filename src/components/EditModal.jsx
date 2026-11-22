@@ -1,3 +1,4 @@
+import { TYPO } from "../styles/typography";
 import React, { useState } from "react";
 
 export function EditModal({ reply, onClose, onSave }) {
@@ -47,8 +48,7 @@ export function EditModal({ reply, onClose, onSave }) {
               color: "var(--color-red)",
               padding: "10px 14px",
               borderRadius: "10px",
-              fontSize: "14px",
-              fontWeight: "600",
+              ...TYPO.subtext,
             }}
           >
             {error}
