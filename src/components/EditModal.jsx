@@ -72,20 +72,20 @@ export function EditModal({ reply, onClose, onSave }) {
 
           <div className="modal-actions">
             <button
-              type="submit"
-              className="btn-submit"
-              style={{ flex: 2, padding: "14px" }}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Salvando..." : "Editar comentário"}
-            </button>
-            <button
               type="button"
               className="btn-modal-cancel"
               onClick={onClose}
               disabled={isSubmitting}
             >
               Cancelar
+            </button>
+            <button
+              type="submit"
+              className="btn-submit"
+              style={{ flex: 2, padding: "14px" }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Salvando..." : "Editar comentário"}
             </button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { useCountdown } from "../hooks/useCountdown";
@@ -7,9 +7,12 @@ import { EditModal } from "../components/EditModal";
 import { DeleteModal } from "../components/DeleteModal";
 import { PrivacyOverlay } from "../components/PrivacyOverlay";
 import { TYPO } from "../styles/typography";
+import periodoEncerrado from "../assets/periodo-encerrado.svg";
+import { ArrowIcon } from "../components/ArrowIcon";
 
 export function ForumPage() {
   const { appState, user, refreshState, showSnackbar, requireUser } = useApp();
+  const replyTextareaRef = useRef(null);
 
   const [replies, setReplies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,9 +108,20 @@ export function ForumPage() {
           return;
         }
 
+        const created = await res.json();
+        const createdId = created.reply?.id;
+
         setNewReplyText("");
-        fetchReplies();
+        await fetchReplies();
         refreshState();
+        showSnackbar("Comentário postado.");
+        if (createdId) {
+          requestAnimationFrame(() => {
+            document
+              .querySelector(`[data-reply-id="${createdId}"]`)
+              ?.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+        }
       } catch (err) {
         alert("Erro de conexão ao enviar.");
       } finally {
@@ -189,14 +203,10 @@ export function ForumPage() {
     return (
       <main className="main-content">
         <div className="question-card-container">
-          <div className="question-hero" style={{ textAlign: "center", alignItems: "center" }}>
-            <span className="question-pill">
-              <span className="question-pill-dot" />
-              <span>Aguardando Abertura</span>
-            </span>
+          <div className="question-hero" style={{ textAlign: "left", alignItems: "flex-start" }}>
             <h1 className="question-title">A plataforma ainda não está aberta.</h1>
             <p style={{ color: "rgba(255, 255, 255, 0.9)", ...TYPO.text2 }}>
-              O Faurum iniciará suas perguntas em breve no piso do museu da FAUUSP.
+              O Faurum iniciará suas perguntas em breve na TV de entrada da FAUUSP.
             </p>
             {countdownText && (
               <div
@@ -235,16 +245,20 @@ export function ForumPage() {
             padding: "32px",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
+            gap: "8px",
+            marginBottom: "24px",
+
           }}
         >
-          <div style={{ ...TYPO.h2 }}>🏁</div>
-          <h1 style={{ ...TYPO.h3, color: "var(--color-black)",  }}>
-            Período de respostas encerrado
-          </h1>
-          <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
-            Porém, você ainda pode ver as respostas do pessoal logo abaixo!
-          </p>
+          <img src={periodoEncerrado} alt="" aria-hidden="true" style={{ width: "56px", height: "auto" }} />
+          <div className="modal-intro">
+            <h1 style={{ ...TYPO.h3, color: "var(--color-black)", }}>
+              Período de respostas encerrado
+            </h1>
+            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+              Porém, você ainda pode ver as respostas do pessoal logo abaixo!
+            </p>
+          </div>
         </div>
 
         {/* Abas para alternar entre Tópico 1 e Tópico 2 */}
@@ -269,9 +283,6 @@ export function ForumPage() {
         <div className="question-card-container">
           <div className="question-hero">
             <div className="question-watermark">?</div>
-            <span className="question-pill">
-              <span>{activeTabTopicId === 1 ? "Pergunta 1 (Encerrada)" : "Pergunta 2 (Encerrada)"}</span>
-            </span>
             <h2 className="question-title">
               {activeTabTopicId === 1 ? topic1Title : topic2Title}
             </h2>
@@ -351,33 +362,42 @@ export function ForumPage() {
           <form onSubmit={handlePostReply} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <div className="textarea-container">
               <textarea
+                ref={replyTextareaRef}
                 className="textarea-input"
                 placeholder="Escreva sua resposta sincera ou reflexão..."
                 value={newReplyText}
                 onChange={(e) => setNewReplyText(e.target.value)}
+                onFocus={() => {
+                  if (!user) {
+                    replyTextareaRef.current?.blur();
+                    requireUser(() => replyTextareaRef.current?.focus());
+                  }
+                }}
                 maxLength={500}
                 required
               />
-              <div className={`char-counter ${newReplyText.length >= 500 ? "limit" : ""}`}>
-                {newReplyText.length}/500 caracteres
-              </div>
             </div>
 
             <div className="submission-footer">
-              <button
-                type="button"
-                className="privacy-link"
-                onClick={() => setIsPrivacyOverlayOpen(true)}
-              >
-                Ver termos de privacidade
-              </button>
+              <div className="submission-meta">
+                <div className={`char-counter ${newReplyText.length >= 500 ? "limit" : ""}`}>
+                  {newReplyText.length}/500<span className="char-counter-label"> caracteres</span>
+                </div>
+                <button
+                  type="button"
+                  className="privacy-link"
+                  onClick={() => setIsPrivacyOverlayOpen(true)}
+                >
+                  Ver termos de privacidade
+                </button>
+              </div>
 
               <button
                 type="submit"
                 className="btn-submit"
                 disabled={isPosting || !newReplyText.trim()}
               >
-                {isPosting ? "Postando..." : "Postar →"}
+                {isPosting ? "Postando..." : <>Postar<ArrowIcon direction="right" /></>}
               </button>
             </div>
           </form>
@@ -399,7 +419,7 @@ export function ForumPage() {
           </div>
         ) : replies.length === 0 ? (
           <div className="empty-state-box">
-            <h3 className="empty-state-title">Ainda não há respostas</h3>
+            <h3 className="empty-state-title" >Ainda não há respostas</h3>
             <p className="empty-state-desc">
               Seja a primeira pessoa a deixar sua impressão sincera sobre a pergunta do dia!
             </p>

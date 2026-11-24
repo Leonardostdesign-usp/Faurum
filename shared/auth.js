@@ -77,7 +77,7 @@ export function getClientIp(request) {
 
 /**
  * Valida o formato do nickname.
- * Regra: 3 a 20 caracteres; letras, números, '_' e '.'; sem espaços.
+ * Regra: 3 a 20 caracteres; letras (sem acento), números, '_' e '.'; sem espaços.
  * @param {string} nick
  * @returns {{ valid: boolean, error?: string }}
  */

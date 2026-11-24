@@ -45,19 +45,19 @@ export function DeleteModal({ reply, onClose, onConfirm }) {
         <div className="modal-actions">
           <button
             type="button"
-            className="btn-modal-danger"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
-            {isDeleting ? "Removendo..." : "Remover comentário"}
-          </button>
-          <button
-            type="button"
             className="btn-modal-cancel"
             onClick={onClose}
             disabled={isDeleting}
           >
             Cancelar
+          </button>
+          <button
+            type="button"
+            className="btn-modal-danger"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Removendo..." : "Remover comentário"}
           </button>
         </div>
       </div>

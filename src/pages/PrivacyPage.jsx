@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TYPO } from "../styles/typography";
+import { ArrowIcon } from "../components/ArrowIcon";
 
 export function PrivacyPage() {
   return (
@@ -8,7 +9,7 @@ export function PrivacyPage() {
       {/* Hero Card */}
       <div
         style={{
-          backgroundColor: "var(--color-white)",
+          backgroundColor: "var(--color-brand)",
           border: "var(--border-thick)",
           borderRadius: "var(--radius-card)",
           boxShadow: "var(--shadow-main)",
@@ -18,12 +19,12 @@ export function PrivacyPage() {
           gap: "12px",
         }}
       >
-        <span style={{ ...TYPO.subtext, color: "var(--color-interactive)", letterSpacing: "1px" }}>
-          PRIVACIDADE & DADOS
-        </span>
-        <h1 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
-          Transparência total e temporariedade garantida na intervenção do campus. Como cuidamos do espaço coletivo da FAU e EBA.
+        <h1 style={{ ...TYPO.h3, color: "var(--color-white)" }}>
+          PRIVACIDADE E DADOS
         </h1>
+        <p style={{ ...TYPO.text2, color: "var(--color-white)" }}>
+          Transparência total e temporariedade garantida na intervenção do campus. Como cuidamos do espaço coletivo da FAU e EBA.
+        </p>
       </div>
 
       {/* Card 1: Sobre os dados */}
@@ -40,7 +41,7 @@ export function PrivacyPage() {
         }}
       >
         <div>
-          <h2 style={{ ...TYPO.text1, color: "var(--color-black)", marginBottom: "8px" }}>
+          <h2 style={{ ...TYPO.text1, color: "var(--color-black)", fontWeight: 700, marginBottom: "8px" }}>
             Sobre os dados produzidos pelos participantes
           </h2>
           <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
@@ -48,36 +49,36 @@ export function PrivacyPage() {
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", paddingBottom: "4px" }}>
+          <div style={{ border: "var(--border-thick)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)", boxShadow: "var(--shadow-card-sm)" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", fontWeight: 700, marginBottom: "6px" }}>
               Fingerprint do Navegador
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Combate a bots repetitivos e automações maliciosas sem recolher documentos pessoais.
             </p>
           </div>
 
-          <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
+          <div style={{ border: "var(--border-thick)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)", boxShadow: "var(--shadow-card-sm)" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", fontWeight: 700, marginBottom: "6px" }}>
               Cookies Essenciais de Sessão
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Mantém seu nick e votos na jornada ativa pelo navegador sem necessitar de senha.
             </p>
           </div>
 
-          <div style={{ border: "var(--border-thin)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)" }}>
-            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", marginBottom: "6px" }}>
+          <div style={{ border: "var(--border-thick)", borderRadius: "14px", padding: "18px", backgroundColor: "var(--color-gray-50)", boxShadow: "var(--shadow-card-sm)" }}>
+            <h3 style={{ ...TYPO.text2, color: "var(--color-black)", fontWeight: 700, marginBottom: "6px" }}>
               Endereço IP de Rede
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Contenção de abuso no pátio acadêmico e integridade do espaço universitário compartilhado.
             </p>
           </div>
         </div>
 
-        <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+        <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
           Isso mantém a capacidade técnica de coibir assédio, vandalismo digital e discurso de ódio, garantindo um ambiente democrático, acolhedor e respeitoso para todos no campus.
         </p>
       </div>
@@ -95,7 +96,7 @@ export function PrivacyPage() {
           gap: "10px",
         }}
       >
-        <h2 style={{ ...TYPO.text1, color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.text1, color: "var(--color-black)", fontWeight: 700 }}>
           E após o fim do projeto?
         </h2>
         <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
@@ -116,14 +117,14 @@ export function PrivacyPage() {
           gap: "10px",
         }}
       >
-        <h2 style={{ ...TYPO.text1, color: "var(--color-black)" }}>
+        <h2 style={{ ...TYPO.text1, color: "var(--color-black)", fontWeight: 700 }}>
           Contato
         </h2>
         <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
           Qualquer dúvida, mande mensagem para o email:{" "}
           <a
             href="mailto:leonardostdesign@usp.br"
-            style={{ color: "var(--color-interactive)", textDecoration: "underline",  }}
+            style={{ color: "var(--color-interactive)", textDecoration: "underline", }}
           >
             leonardostdesign@usp.br
           </a>
@@ -135,7 +136,8 @@ export function PrivacyPage() {
         className="btn-submit"
         style={{ width: "100%", padding: "18px", textAlign: "center", textDecoration: "none" }}
       >
-        Ir para pergunta do dia →
+        Ir para pergunta do dia
+        <ArrowIcon direction="right" />
       </Link>
     </main>
   );

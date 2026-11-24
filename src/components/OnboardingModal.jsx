@@ -3,13 +3,14 @@ import { useApp } from "../context/AppContext";
 import { useFingerprint } from "../hooks/useFingerprint";
 import { PrivacyOverlay } from "./PrivacyOverlay";
 import { TYPO } from "../styles/typography";
+import { ArrowIcon } from "./ArrowIcon";
 
 export function OnboardingModal() {
   const { isOnboardingOpen, setIsOnboardingOpen, handleOnboardingSuccess } = useApp();
   const fingerprint = useFingerprint();
 
   const [nick, setNick] = useState("");
-  const [course, setCourse] = useState("design"); // Pré-selecionado conforme o Figma (frame 123:610)
+  const [course, setCourse] = useState("");
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [isPrivacyOverlayOpen, setIsPrivacyOverlayOpen] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +30,12 @@ export function OnboardingModal() {
     }
 
     if (!/^[a-zA-Z0-9_.]+$/.test(cleanNick)) {
-      setError("O nickname só pode conter letras, números, '_' e '.'.");
+      setError("O nickname só pode conter letras (sem acento), números, '_' e '.'.");
+      return;
+    }
+
+    if (!course) {
+      setError("Selecione um curso para continuar.");
       return;
     }
 
@@ -58,6 +64,7 @@ export function OnboardingModal() {
       }
 
       handleOnboardingSuccess(data.user);
+      setIsOnboardingOpen(false);
     } catch (err) {
       setError("Falha de conexão com o servidor. Tente novamente.");
     } finally {
@@ -74,8 +81,10 @@ export function OnboardingModal() {
               <span>👋</span>
               <span>BOAS-VINDAS AO FAURUM</span>
             </div>
-            <h2 className="modal-title">Antes de começar...</h2>
-            <p className="modal-subtitle">Personalize como você vai aparecer no fórum.</p>
+            <div className="modal-intro">
+              <h2 className="modal-title">Antes de começar...</h2>
+              <p className="modal-subtitle">Personalize como você vai aparecer no fórum.</p>
+            </div>
           </div>
 
           {error && (
@@ -96,7 +105,7 @@ export function OnboardingModal() {
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <div className="form-group">
               <label htmlFor="nick-input" className="form-label">
-                Seu Nickname
+                Seu ickname
               </label>
               <div className="input-with-prefix">
                 <span className="input-prefix">@</span>
@@ -118,21 +127,21 @@ export function OnboardingModal() {
               <div className="course-options-container">
                 <button
                   type="button"
-                  className={`btn-course-option ${course === "arquitetura" ? "selected" : ""}`}
+                  className={`btn-course-option arquitetura ${course === "arquitetura" ? "selected" : ""}`}
                   onClick={() => setCourse("arquitetura")}
                 >
                   Arquitetura
                 </button>
                 <button
                   type="button"
-                  className={`btn-course-option ${course === "design" ? "selected" : ""}`}
+                  className={`btn-course-option design ${course === "design" ? "selected" : ""}`}
                   onClick={() => setCourse("design")}
                 >
                   Design
                 </button>
                 <button
                   type="button"
-                  className={`btn-course-option ${course === "outro" ? "selected" : ""}`}
+                  className={`btn-course-option outro ${course === "outro" ? "selected" : ""}`}
                   onClick={() => setCourse("outro")}
                 >
                   Outro
@@ -141,7 +150,7 @@ export function OnboardingModal() {
             </div>
 
             <div className="form-group">
-              <label className="privacy-checkbox-label">
+              <div className="privacy-checkbox-label">
                 <div
                   className={`custom-checkbox ${privacyAccepted ? "checked" : ""}`}
                   onClick={() => setPrivacyAccepted(!privacyAccepted)}
@@ -166,16 +175,13 @@ export function OnboardingModal() {
                   <button
                     type="button"
                     style={{ color: "var(--color-interactive)", textDecoration: "underline", ...TYPO.subtext }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsPrivacyOverlayOpen(true);
-                    }}
+                    onClick={() => setIsPrivacyOverlayOpen(true)}
                   >
                     Aviso de Privacidade
                   </button>
                   <span> da plataforma.</span>
                 </div>
-              </label>
+              </div>
             </div>
 
             <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
@@ -192,7 +198,7 @@ export function OnboardingModal() {
                 style={{ flex: 2, padding: "14px" }}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Entrando..." : "Entrar no Fórum →"}
+                {isSubmitting ? "Entrando..." : <>Entrar no Fórum<ArrowIcon direction="right" /></>}
               </button>
             </div>
           </form>

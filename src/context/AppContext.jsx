@@ -78,11 +78,16 @@ export function AppProvider({ children }) {
     setUser(newUser);
     setIsOnboardingOpen(false);
     refreshState();
+    showSnackbar("Login realizado.");
+
     if (onboardingSuccessCallback) {
-      onboardingSuccessCallback(newUser);
+      const callback = onboardingSuccessCallback;
       setOnboardingSuccessCallback(null);
+      // Adia o callback até depois da renderização com `user` já preenchido.
+      // Isso evita que um focus() no textarea reabra o modal via requireUser.
+      setTimeout(() => callback(newUser), 0);
     }
-  }, [onboardingSuccessCallback, refreshState]);
+  }, [onboardingSuccessCallback, refreshState, showSnackbar]);
 
   return (
     <AppContext.Provider

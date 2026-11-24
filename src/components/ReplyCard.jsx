@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 
@@ -14,6 +14,8 @@ export function ReplyCard({
   const { requireUser } = useApp();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
+  const menuBtnRef = useRef(null);
   const [isAccordionOpen, setIsAccordionOpen] = useState(!reply.isCollapsed);
 
   // Iniciais do autor para o avatar
@@ -89,10 +91,20 @@ export function ReplyCard({
           {reply.isOwner && !isReadOnly && !reply.isDeleted && (
             <div style={{ position: "relative" }}>
               <button
+                ref={menuBtnRef}
                 type="button"
                 className="btn-options"
                 aria-label="Opções da publicação"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={() => {
+                  if (!isMenuOpen && menuBtnRef.current) {
+                    const rect = menuBtnRef.current.getBoundingClientRect();
+                    setMenuPos({
+                      top: rect.bottom + 6,
+                      right: Math.max(8, window.innerWidth - rect.right),
+                    });
+                  }
+                  setIsMenuOpen(!isMenuOpen);
+                }}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="12" cy="5" r="2" />
@@ -107,7 +119,10 @@ export function ReplyCard({
                     style={{ position: "fixed", inset: 0, zIndex: 30 }}
                     onClick={() => setIsMenuOpen(false)}
                   />
-                  <div className="options-dropdown">
+                  <div
+                    className="options-dropdown"
+                    style={{ position: "fixed", top: menuPos.top, right: menuPos.right, left: "auto" }}
+                  >
                     <button
                       type="button"
                       className="options-item"

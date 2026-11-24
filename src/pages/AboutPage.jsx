@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TYPO } from "../styles/typography";
+import { ArrowIcon } from "../components/ArrowIcon";
 
 export function AboutPage() {
   return (
@@ -8,7 +9,7 @@ export function AboutPage() {
       {/* Hero Card */}
       <div
         style={{
-          backgroundColor: "var(--color-white)",
+          backgroundColor: "var(--color-brand)",
           border: "var(--border-thick)",
           borderRadius: "var(--radius-card)",
           boxShadow: "var(--shadow-main)",
@@ -18,12 +19,12 @@ export function AboutPage() {
           gap: "12px",
         }}
       >
-        <span style={{ ...TYPO.subtext, color: "var(--color-interactive)", letterSpacing: "1px" }}>
+        <h1 style={{ ...TYPO.h3, color: "var(--color-white)" }}>
           SOBRE O PROJETO
-        </span>
-        <h1 style={{ ...TYPO.h3, color: "var(--color-black)" }}>
-          Uma breve explicação sobre a natureza e funcionamento do projeto e plataforma.
         </h1>
+        <p style={{ ...TYPO.text2, color: "var(--color-white)" }}>
+          Uma breve explicação sobre a natureza e funcionamento do projeto e plataforma.
+        </p>
       </div>
 
       {/* Manifesto */}
@@ -85,10 +86,10 @@ export function AboutPage() {
             01
           </div>
           <div>
-            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px", fontWeight: 700 }}>
               Pergunta diária
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Tópico norteador que convida à interação aparece.
             </p>
           </div>
@@ -115,10 +116,10 @@ export function AboutPage() {
             02
           </div>
           <div>
-            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px", fontWeight: 700 }}>
               Interação dos alunos
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Os alunos podem interagir com o tópico norteador ou, então, responder aos comentários feitos por outros alunos que já interagiram antes.
             </p>
           </div>
@@ -145,10 +146,10 @@ export function AboutPage() {
             03
           </div>
           <div>
-            <h3 style={{ ...TYPO.text2, marginBottom: "4px" }}>
+            <h3 style={{ ...TYPO.text2, marginBottom: "4px", fontWeight: 700 }}>
               Repetição
             </h3>
-            <p style={{ ...TYPO.text2, color: "var(--color-gray-500)" }}>
+            <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
               Após um certo período um novo tópico substitui o anterior.
             </p>
           </div>
@@ -160,7 +161,8 @@ export function AboutPage() {
         className="btn-submit"
         style={{ width: "100%", padding: "18px", textAlign: "center", textDecoration: "none" }}
       >
-        Ir para pergunta do dia →
+        Ir para pergunta do dia
+        <ArrowIcon direction="right" />
       </Link>
     </main>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { ReplyCard } from "../components/ReplyCard";
@@ -6,11 +6,13 @@ import { EditModal } from "../components/EditModal";
 import { DeleteModal } from "../components/DeleteModal";
 import { PrivacyOverlay } from "../components/PrivacyOverlay";
 import { TYPO } from "../styles/typography";
+import { ArrowIcon } from "../components/ArrowIcon";
 
 export function ThreadPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { appState, refreshState, requireUser } = useApp();
+  const { appState, user, refreshState, showSnackbar, requireUser } = useApp();
+  const replyTextareaRef = useRef(null);
 
   const [data, setData] = useState(null); // { reply, ancestors, replies }
   const [isLoading, setIsLoading] = useState(true);
@@ -80,9 +82,20 @@ export function ThreadPage() {
           return;
         }
 
+        const created = await res.json();
+        const createdId = created.reply?.id;
+
         setNewReplyText("");
-        fetchThread();
+        await fetchThread();
         refreshState();
+        showSnackbar("Comentário postado.");
+        if (createdId) {
+          requestAnimationFrame(() => {
+            document
+              .querySelector(`[data-reply-id="${createdId}"]`)
+              ?.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+        }
       } catch (err) {
         alert("Erro de conexão ao enviar.");
       } finally {
@@ -210,7 +223,8 @@ export function ThreadPage() {
             padding: "8px 0",
           }}
         >
-          ← Voltar ao Fórum
+          <ArrowIcon direction="left" />
+          Voltar ao Fórum
         </button>
 
         <div className="empty-state-box">
@@ -226,17 +240,12 @@ export function ThreadPage() {
       {/* Botão Voltar (Figma frame 123:286) */}
       <button
         type="button"
+        className="btn-back-pill"
         onClick={handleBack}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "8px",
-          ...TYPO.text2,
-          color: "var(--color-black)",
-          width: "fit-content",
-        }}
+        style={{ width: "fit-content" }}
       >
-        <span>← Voltar ao Fórum</span>
+        <ArrowIcon direction="left" />
+        Voltar ao Fórum
       </button>
 
       {/* Cadeia de Ancestrais (Se for resposta a outro comentário) */}
@@ -281,27 +290,36 @@ export function ThreadPage() {
             <form onSubmit={handlePostChildReply} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <div className="textarea-container">
                 <textarea
+                  ref={replyTextareaRef}
                   className="textarea-input"
                   style={{ minHeight: "85px" }}
                   placeholder="Escreva sua resposta sincera ou reflexão..."
                   value={newReplyText}
                   onChange={(e) => setNewReplyText(e.target.value)}
+                  onFocus={() => {
+                    if (!user) {
+                      replyTextareaRef.current?.blur();
+                      requireUser(() => replyTextareaRef.current?.focus());
+                    }
+                  }}
                   maxLength={500}
                   required
                 />
-                <div className={`char-counter ${newReplyText.length >= 500 ? "limit" : ""}`}>
-                  {newReplyText.length}/500 caracteres
-                </div>
               </div>
 
               <div className="submission-footer">
-                <button
-                  type="button"
-                  className="privacy-link"
-                  onClick={() => setIsPrivacyOverlayOpen(true)}
-                >
-                  Ver termos de privacidade
-                </button>
+                <div className="submission-meta">
+                  <div className={`char-counter ${newReplyText.length >= 500 ? "limit" : ""}`}>
+                    {newReplyText.length}/500<span className="char-counter-label"> caracteres</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="privacy-link"
+                    onClick={() => setIsPrivacyOverlayOpen(true)}
+                  >
+                    Ver termos de privacidade
+                  </button>
+                </div>
 
                 <button
                   type="submit"
@@ -309,7 +327,7 @@ export function ThreadPage() {
                   style={{ padding: "10px 24px" }}
                   disabled={isPosting || !newReplyText.trim()}
                 >
-                  {isPosting ? "Enviando..." : "Responder →"}
+                  {isPosting ? "Enviando..." : <>Responder<ArrowIcon direction="right" /></>}
                 </button>
               </div>
             </form>
