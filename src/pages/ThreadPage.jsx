@@ -4,7 +4,6 @@ import { useApp } from "../context/AppContext";
 import { ReplyCard } from "../components/ReplyCard";
 import { EditModal } from "../components/EditModal";
 import { DeleteModal } from "../components/DeleteModal";
-import { PrivacyOverlay } from "../components/PrivacyOverlay";
 import { TYPO } from "../styles/typography";
 import { ArrowIcon } from "../components/ArrowIcon";
 
@@ -21,7 +20,6 @@ export function ThreadPage() {
   const [isPosting, setIsPosting] = useState(false);
   const [editingReply, setEditingReply] = useState(null);
   const [deletingReply, setDeletingReply] = useState(null);
-  const [isPrivacyOverlayOpen, setIsPrivacyOverlayOpen] = useState(false);
 
   const isReadOnly = appState.phase === "closed";
 
@@ -312,13 +310,6 @@ export function ThreadPage() {
                   <div className={`char-counter ${newReplyText.length >= 500 ? "limit" : ""}`}>
                     {newReplyText.length}/500<span className="char-counter-label"> caracteres</span>
                   </div>
-                  <button
-                    type="button"
-                    className="privacy-link"
-                    onClick={() => setIsPrivacyOverlayOpen(true)}
-                  >
-                    Ver termos de privacidade
-                  </button>
                 </div>
 
                 <button
@@ -379,10 +370,6 @@ export function ThreadPage() {
           onClose={() => setDeletingReply(null)}
           onConfirm={handleConfirmDelete}
         />
-      )}
-
-      {isPrivacyOverlayOpen && (
-        <PrivacyOverlay onClose={() => setIsPrivacyOverlayOpen(false)} />
       )}
     </main>
   );

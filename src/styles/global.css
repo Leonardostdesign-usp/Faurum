@@ -162,31 +162,72 @@ h3,
   width: 100%;
 }
 
-/* Ícone de marca — quadrado azul neo-brutalista */
-.brand-mark {
+/* Logo horizontal */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: transform 0.1s ease;
+}
+
+.brand-logo:active {
+  transform: translateY(1px);
+}
+
+.brand-logo-img {
+  display: block;
+  height: 25px;
+  width: auto;
+}
+
+.menu-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.menu-toggle {
   width: 44px;
   height: 44px;
-  background-color: var(--color-interactive);
-  border: 2px solid var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-thick);
   border-radius: 8px;
-  box-shadow: 3px 3px 0px #111111;
+  box-shadow: var(--shadow-button);
+  color: var(--color-black);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-white);
-  flex-shrink: 0;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: background-color 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.brand-mark:active {
+.menu-toggle:hover {
+  background-color: var(--color-gray-50);
+}
+
+.menu-toggle:active {
   transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px #111111;
+  box-shadow: var(--shadow-button-active);
 }
 
-.nav-links {
+.nav-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background-color: var(--color-white);
+  border: var(--border-thick);
+  border-radius: 12px;
+  box-shadow: var(--shadow-main);
+  padding: 8px;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 60;
+}
+
+.nav-menu .nav-link {
+  display: block;
+  width: 100%;
+  text-align: left;
 }
 
 /* Nav links — sem borda em repouso, pílula azul no estado ativo */
@@ -210,7 +251,26 @@ h3,
   background-color: var(--color-interactive);
   color: var(--color-white);
   border-color: var(--color-black);
-  box-shadow: var(--shadow-button);
+}
+
+@media (max-width: 600px) {
+  .sticky-header {
+    padding: 12px 16px;
+  }
+
+  .brand-logo-img {
+    height: 28px;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-menu {
+    width: max-content;
+    max-width: calc(100vw - 32px);
+  }
 }
 
 /* ---- Main ---- */
@@ -394,20 +454,12 @@ h3,
   flex-wrap: wrap-reverse;
 }
 
-.submission-footer .privacy-link {
-  margin: 0;
-  line-height: 1.2;
-}
-
 @media (max-width: 600px) {
   .submission-footer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      "submit counter"
-      "terms .";
+    grid-template-areas: "submit counter";
     align-items: start;
-    row-gap: 10px;
   }
 
   .submission-meta {
@@ -417,12 +469,6 @@ h3,
   .submission-meta .char-counter {
     grid-area: counter;
     justify-self: end;
-  }
-
-  .submission-footer .privacy-link {
-    grid-area: terms;
-    justify-self: start;
-    text-align: left;
   }
 
   .submission-footer .btn-submit {

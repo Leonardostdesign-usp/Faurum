@@ -100,7 +100,7 @@ export function PrivacyPage() {
           E após o fim do projeto?
         </h2>
         <p style={{ ...TYPO.text2, color: "var(--color-black)" }}>
-          No fim do tempo de exibição do projeto, o banco de dados será completamente deletado e todas as informações serão destruídas.
+          No fim do tempo de exibição do projeto, haverá um período de exibição das respostas de ambos os tópicos durante dois ou três dias. Após isso, o banco de dados será completamente deletado e todas as informações serão destruídas.
         </p>
       </div>
 
